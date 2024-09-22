@@ -56,6 +56,7 @@ public class InternalMovement : MonoBehaviour
         if (isGrounded == true && jump == 1)
         {
             isGrounded = false;
+            rb.linearVelocityY = 0;
             rb.AddForce(Vector2.up * jumpForce);
         }
     }
