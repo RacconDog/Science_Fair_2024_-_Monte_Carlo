@@ -1,9 +1,5 @@
-using System;
 using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
 using Random = UnityEngine.Random;
 
 public class MonteCarloGen : MonoBehaviour
@@ -18,7 +14,7 @@ public class MonteCarloGen : MonoBehaviour
     {
         //Hold Right
         StreamWriter sw = new StreamWriter("Save.txt");
-        for (int i = 0; i < 5000; i++)
+        for (int i = 0; i < 500; i++)
         {
             int jumpResult;
             if (Random.Range(0, 100) < jumpChance)

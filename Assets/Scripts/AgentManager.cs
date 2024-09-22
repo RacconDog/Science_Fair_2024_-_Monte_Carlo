@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AgentManager : MonoBehaviour
 {
-    float highFitScore;
+    float highFitnessScore;
     [SerializeField] float lifeTime = 100;
     [SerializeField] float childrenPerGeneration = 0;
     float curGenerationAge = 0;

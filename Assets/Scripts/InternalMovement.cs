@@ -15,7 +15,7 @@ public class InternalMovement : MonoBehaviour
     [SerializeField] float dir;
     [SerializeField] bool debugControlMode;
 
-    bool isGrounded;
+    bool isGrounded = true;
 
     void Start()
     {
@@ -57,7 +57,7 @@ public class InternalMovement : MonoBehaviour
         {
             isGrounded = false;
             rb.linearVelocityY = 0;
-            rb.AddForce(Vector2.up * jumpForce);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);
         }
     }
 
