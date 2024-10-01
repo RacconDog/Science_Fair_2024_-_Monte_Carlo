@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.IO;
 using System;
 using Unity.VisualScripting;
+using System.Collections.Generic;
 
 public class MonteCarloPlayer : MonoBehaviour
 {
@@ -10,14 +11,15 @@ public class MonteCarloPlayer : MonoBehaviour
     PlayerInput playerInput;
 
     InternalMovement internalMovement;
-    string[] readString;
 
     bool isReading;
-    string[] lines;
     [SerializeField] int lineIndex = 0;
 
-    string[] additiveMutation;
+    public List<string> lines = new List<string>();
+    public List<string> additiveMutation = new List<string>();
+
     AgentManager agentManager;
+    MonteCarloGen mcGen;
 
     float fitnessScore;
 
@@ -27,20 +29,23 @@ public class MonteCarloPlayer : MonoBehaviour
         internalMovement = GetComponent<InternalMovement>();
 
         agentManager = GameObject.Find("Agent Manager").GetComponent<AgentManager>();
+        mcGen = GameObject.Find("Agent Manager").GetComponent<MonteCarloGen>();
+
+        additiveMutation = mcGen.GenAdditiveMutaion(agentManager.lifeTime);
+        for (int i = 0; i < additiveMutation.Count; i++)
+        {
+            // lines.
+        }
 
         TestPlayer();
     }
     
     void LateUpdate()
     {
-        if (agentManager.terminalAge == true)
-        {
-            Death();
-        }
         if(isReading == true)
         {
             string curLine;
-            if (lineIndex < lines.Length)
+            if (lineIndex < lines.Count)
             {
                 curLine = lines[lineIndex];
             }
@@ -56,12 +61,7 @@ public class MonteCarloPlayer : MonoBehaviour
         }
     }
 
-    void Death()
-    {
-
-    }
-
-    float EvaulateFitnessScore()
+    public float EvaulateFitnessScore()
     {
         return transform.position.x;
     }

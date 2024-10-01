@@ -1,17 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class AgentManager : MonoBehaviour
 {
-    float highFitnessScore;
-    [SerializeField] float lifeTime = 100;
+    float highFitnessScore = 0;
     [SerializeField] float childrenPerGeneration = 0;
-    float curGenerationAge = 0;
 
     [SerializeField] GameObject agentPrefab;
     [SerializeField] GameObject fittestAgent;
 
-    [HideInInspector] public bool terminalAge;
+    [SerializeField] public int lifeTime;
 
     List<MonteCarloPlayer> aliveAgents = new List<MonteCarloPlayer>();
 
@@ -19,30 +18,30 @@ public class AgentManager : MonoBehaviour
 
     public void StartSimulation()
     {
-        BirthNextGeneration();
-    }
-
-    void Update()
-    {
-        if (!simStarted) return;
-        
-        if (terminalAge == true)
+        for (int i = 0; i < childrenPerGeneration; i++)
         {
-            aliveAgents.Clear();
+            aliveAgents.Add(Instantiate(agentPrefab, fittestAgent.transform.position, Quaternion.identity)
+                .GetComponent<MonteCarloPlayer>());
         }
-        if (curGenerationAge == lifeTime)
-        {
-            terminalAge = true;
-        }
-        curGenerationAge++;
     }
 
     public void BirthNextGeneration()
     {
         for (int i = 0; i < childrenPerGeneration; i++)
         {
-            aliveAgents.Add(Instantiate(agentPrefab, fittestAgent.transform.position, Quaternion.identity)
-                .GetComponent<MonteCarloPlayer>());
+            float fitScore = aliveAgents[i].EvaulateFitnessScore();
+            if (fitScore > highFitnessScore)
+            {
+                highFitnessScore = fitScore;
+                StreamWriter sw = new StreamWriter("Save.txt");
+
+                for (int ii = 0; ii < aliveAgents[i].additiveMutation.Count; ii++)
+                {  
+                    sw.WriteLine(aliveAgents[i].additiveMutation[ii]);
+                }
+
+                sw.Close();
+            }
         }
     }
 }
