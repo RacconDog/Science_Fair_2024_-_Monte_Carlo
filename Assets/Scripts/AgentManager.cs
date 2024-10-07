@@ -1,47 +1,59 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Linq;
 
 public class AgentManager : MonoBehaviour
 {
-    float highFitnessScore = 0;
-    [SerializeField] float childrenPerGeneration = 0;
+    [SerializeField] float childrenPerGenertaion = 0;
+    [SerializeField] int lifeTime = 0;
 
     [SerializeField] GameObject agentPrefab;
     [SerializeField] GameObject fittestAgent;
 
-    [SerializeField] public int lifeTime;
+    // List<MonteCarloPlayer> aliveAgents = new List<MonteCarloPlayer>();
 
-    List<MonteCarloPlayer> aliveAgents = new List<MonteCarloPlayer>();
+    [SerializeField] float jumpChance = 15;
 
-    bool simStarted = false;
+    int curGen = 0;
 
-    public void StartSimulation()
+    public void ClearGen()
     {
-        for (int i = 0; i < childrenPerGeneration; i++)
-        {
-            aliveAgents.Add(Instantiate(agentPrefab, fittestAgent.transform.position, Quaternion.identity)
-                .GetComponent<MonteCarloPlayer>());
-        }
+        File.WriteAllText("Save.txt", string.Empty);
+        print("Clear Gen");
     }
 
-    public void BirthNextGeneration()
+    public void TestGen()
+    {        
+        File.WriteAllLines("Save.txt", GenerateGenes(lifeTime));
+
+        // Delete last line (which was an empty line)
+        var lines = System.IO.File.ReadAllLines("Save.txt");
+
+        print("Test Gen");
+    }
+
+    public string[] GenerateGenes(int g_lifeTime)
     {
-        for (int i = 0; i < childrenPerGeneration; i++)
+        string[] returnArray = new string[g_lifeTime];
+        for (int i = 0; i < g_lifeTime; i++)
         {
-            float fitScore = aliveAgents[i].EvaulateFitnessScore();
-            if (fitScore > highFitnessScore)
+            // Random int between -1 and 1
+            int moveResult = Random.Range(-1, 2);
+
+            int jumpResult = 0;
+            if (Random.Range(0, 100) < jumpChance)
             {
-                highFitnessScore = fitScore;
-                StreamWriter sw = new StreamWriter("Save.txt");
-
-                for (int ii = 0; ii < aliveAgents[i].additiveMutation.Count; ii++)
-                {  
-                    sw.WriteLine(aliveAgents[i].additiveMutation[ii]);
-                }
-
-                sw.Close();
+                jumpResult = 1;
             }
+
+            string line = 
+                moveResult.ToString().PadLeft(2)
+                + "," +
+                jumpResult.ToString();
+            returnArray[i] = line;
         }
+
+        return returnArray;
     }
 }

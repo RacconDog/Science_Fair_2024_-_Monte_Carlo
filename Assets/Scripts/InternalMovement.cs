@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,15 +11,15 @@ public class InternalMovement : MonoBehaviour
 
     Rigidbody2D rb;
 
-    [SerializeField] float dir;
     [SerializeField] bool debugControlMode;
-
-    bool isGrounded = true;
+ 
+    float dir;
+    bool isGrounded = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        if(debugControlMode)
+        if (debugControlMode)
         {
             playerInput = GetComponent<PlayerInput>();
             moveAction = playerInput.actions["Move"];
@@ -30,30 +29,29 @@ public class InternalMovement : MonoBehaviour
 
     void Update()
     {
-        if(debugControlMode)
+        if (debugControlMode)
         {
             dir = moveAction.ReadValue<Vector2>().x;
-        }
-        if(debugControlMode && jumpAction.ReadValue<float>() == 1)
-        {
-            Jump(1);
+            if (jumpAction.ReadValue<float>() == 1)
+            {
+                Jump(1);
+            }
         }
 
         rb.linearVelocityX = dir * speed;
-        
     }
 
     public void AlterMoveDir(float dirArg)
     {
-        if(!debugControlMode)
+        if (! debugControlMode)
         {
             dir = dirArg;
         }
     }
 
-    public void Jump(int jump)
+    public void Jump(int shouldJump)
     {
-        if (isGrounded == true && jump == 1)
+        if (isGrounded && shouldJump == 1)
         {
             isGrounded = false;
             rb.linearVelocityY = 0;
@@ -63,7 +61,6 @@ public class InternalMovement : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D other)
     {
-        // if (other.gameObject.tag != "Floor") return;
         isGrounded = false;
     }
 

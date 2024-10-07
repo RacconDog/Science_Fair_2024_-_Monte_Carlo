@@ -9,14 +9,14 @@ public class AgentManagerEditor : Editor
         DrawDefaultInspector();
         
         AgentManager agentManager = (AgentManager)target;
-        if(GUILayout.Button("Next Gen Debug"))
+        if(GUILayout.Button("Clear Generation"))
         {
-            agentManager.BirthNextGeneration();
+            agentManager.ClearGen();
         }
 
-        if(GUILayout.Button("Start Simulation"))
+        if(GUILayout.Button("Test Generation"))
         {
-            agentManager.BirthNextGeneration();
+            agentManager.TestGen();
         }
     }
 }

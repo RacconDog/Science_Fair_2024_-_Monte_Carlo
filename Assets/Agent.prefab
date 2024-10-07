@@ -50,6 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugLineIndex: 0
   lineIndex: 0
+  lines: []
+  additiveMutation: []
 --- !u!114 &384695697599752932
 MonoBehaviour:
   m_ObjectHideFlags: 0

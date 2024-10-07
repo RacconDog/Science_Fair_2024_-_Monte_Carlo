@@ -4,34 +4,29 @@ using System.IO;
 using System;
 using Unity.VisualScripting;
 using System.Collections.Generic;
+using System.Linq;
 
 public class MonteCarloPlayer : MonoBehaviour
 {
-    [SerializeField] int debugLineIndex;
     PlayerInput playerInput;
 
     InternalMovement internalMovement;
 
-    bool isReading;
-    [SerializeField] int lineIndex = 0;
+    int lineIndex = 0;
 
     public List<string> lines = new List<string>();
     public List<string> additiveMutation = new List<string>();
 
     AgentManager agentManager;
-    MonteCarloGen mcGen;
 
-    float fitnessScore;
+    // float fitnessScore;
 
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
         internalMovement = GetComponent<InternalMovement>();
-
         agentManager = GameObject.Find("Agent Manager").GetComponent<AgentManager>();
-        mcGen = GameObject.Find("Agent Manager").GetComponent<MonteCarloGen>();
 
-        additiveMutation = mcGen.GenAdditiveMutaion(agentManager.lifeTime);
+        // additiveMutation = mcGen.GenAdditiveMutaion(agentManager.lifeTime);
         for (int i = 0; i < additiveMutation.Count; i++)
         {
             // lines.
@@ -39,23 +34,28 @@ public class MonteCarloPlayer : MonoBehaviour
 
         TestPlayer();
     }
+
+    public void TestPlayer()
+    {
+        lines = File.ReadAllLines("Save.txt").OfType<string>().ToList();
+    }
     
     void LateUpdate()
     {
-        if(isReading == true)
+        string curLine = "10";
+        
+        if (lineIndex < lines.Count)
         {
-            string curLine;
-            if (lineIndex < lines.Count)
-            {
-                curLine = lines[lineIndex];
-            }
-            else
-            {
-                curLine = "10";
-            }
+            curLine = lines[lineIndex];
 
-            internalMovement.AlterMoveDir((float)Char.GetNumericValue(curLine[0]) - 1);
-            internalMovement.Jump((int)Char.GetNumericValue(curLine[1]));
+            string[] columns = curLine.Split(",");
+            int move = Int32.Parse(columns[0]);
+            int jump = Int32.Parse(columns[1]);
+
+            // print($"{lineIndex}: {move}, {jump}");
+
+            internalMovement.AlterMoveDir(move);
+            internalMovement.Jump(jump);
 
             lineIndex++;
         }
@@ -65,17 +65,4 @@ public class MonteCarloPlayer : MonoBehaviour
     {
         return transform.position.x;
     }
-
-    public void TestPlayer()
-    {
-        // lines = GetFileAsArray();
-        lines = File.ReadAllLines("Save.txt");
-        isReading = true;
-    }
-
-    // string[] GetFileAsArray()
-    // {
-    //     string[] readString = File.ReadAllLines("Save.txt");
-    //     return readString;
-    // }
 }
