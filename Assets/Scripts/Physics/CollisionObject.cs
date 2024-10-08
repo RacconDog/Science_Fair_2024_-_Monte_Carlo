@@ -1,40 +1,72 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionObject : MonoBehaviour
+public class PlayerPhysics : MonoBehaviour
 {
-    //Editor Notes --
-    //  -This is any object that will be moving and need collision
-    //  -Have this interact with RigidBody2D trigger colliders
-    //  -Use Physics2D.Raycast for low-level detection
-    //  - VERY VERY IMPORTANT -----> EVERYTHING ON FRAME STEP, Not fixed step
+    [SerializeField]
+    private float groundCheckDistance = 4f; // Culling distance for ground check
+    [SerializeField]
+    private LayerMask groundLayer; // Layer for ground detection
+    [SerializeField]
+    private float wallCheckDistance = 0.5f; // Distance for wall checks
+    private RaycastHit2D hit;
 
-    //^^^^^^^^ like holy shit can not stress this enough.
+    public bool IsGrounded { get; private set; }
+    public bool IsTouchingLeftWall { get; private set; }
+    public bool IsTouchingRightWall { get; private set; }
 
-    // DON"T FORGET WESTON -------> have Raycasts Hit Triggers enabled in ProjectSettings -> Physics
-    float floorCullingDist = 4;
+    private Rigidbody2D rb; // Reference to Rigidbody2D for interaction with physics
 
-    void Update()
+    void Start()
     {
-        CheckForFloor();
-        CheckForWallsLeftAndRight();
+        rb = GetComponent<Rigidbody2D>();
+        rb.isKinematic = false; // Ensures the object is under physics control
+        rb.simulated = true; // Physics simulation enabled
+    }
+
+    void Update() // Run on frame step, NOT FixedUpdate
+    {
+        CheckForFloor(); // Ground check
+        CheckForWallsLeftAndRight(); // Wall check
     }
 
     void CheckForFloor()
     {
-        if (Physics2D.Raycast(transform.position, transform.down, out RaycastHit hit, floorCullingDist))
+        // Raycast downward to check for the floor
+        hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
+        
+        if (hit.collider != null && hit.collider.CompareTag("Collider"))
         {
-            if(hit.GameObject.Tag == "Collider")
-            {
-                // Placeholder
-                someCustomRigidBody.yVelocity = 0;
-                someCustomRigidBody.isGrounded = true;
-            }
+            IsGrounded = true;
+            Debug.DrawRay(transform.position, Vector2.down * groundCheckDistance, Color.green); // Debug line when grounded
+        }
+        else
+        {
+            IsGrounded = false;
+            Debug.DrawRay(transform.position, Vector2.down * groundCheckDistance, Color.red); // Debug line when not grounded
         }
     }
 
     void CheckForWallsLeftAndRight()
     {
-        //blah blah blah
+        // Raycast to the left
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, wallCheckDistance, groundLayer);
+        IsTouchingLeftWall = hitLeft.collider != null && hitLeft.collider.CompareTag("Collider");
+        
+        // Raycast to the right
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position, Vector2.right, wallCheckDistance, groundLayer);
+        IsTouchingRightWall = hitRight.collider != null && hitRight.collider.CompareTag("Collider");
+
+        // Debugging wall detection
+        Debug.DrawRay(transform.position, Vector2.left * wallCheckDistance, IsTouchingLeftWall ? Color.blue : Color.gray);
+        Debug.DrawRay(transform.position, Vector2.right * wallCheckDistance, IsTouchingRightWall ? Color.blue : Color.gray);
+    }
+
+    // Optionally, you can handle collision events with trigger colliders
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Collider"))
+        {
+            Debug.Log("Collided with: " + other.name);
+        }
     }
 }
