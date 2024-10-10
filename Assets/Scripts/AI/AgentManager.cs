@@ -5,6 +5,8 @@ using System.Linq;
 
 public class AgentManager : MonoBehaviour
 {
+    [HideInInspector] public string savePath = 
+        "Science_Fair_2024_-_Monte_Carlo/Assets/Save.txt";
     [SerializeField] float childrenPerGenertaion = 0;
     [SerializeField] int lifeTime = 0;
 
@@ -19,16 +21,16 @@ public class AgentManager : MonoBehaviour
 
     public void ClearGen()
     {
-        File.WriteAllText("Save.txt", string.Empty);
+        File.WriteAllText(savePath, string.Empty);
         print("Clear Gen");
     }
 
     public void TestGen()
     {        
-        File.WriteAllLines("Save.txt", GenerateGenes(lifeTime));
+        File.WriteAllLines(savePath, GenerateGenes(lifeTime));
 
         // Delete last line (which was an empty line)
-        var lines = System.IO.File.ReadAllLines("Save.txt");
+        var lines = System.IO.File.ReadAllLines(savePath);
 
         print("Test Gen");
     }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InternalMovement : MonoBehaviour
+public class LowLevelMovement : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] float jumpForce;

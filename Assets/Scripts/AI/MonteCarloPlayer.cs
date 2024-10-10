@@ -37,7 +37,9 @@ public class MonteCarloPlayer : MonoBehaviour
 
     public void TestPlayer()
     {
-        lines = File.ReadAllLines("Save.txt").OfType<string>().ToList();
+        lines = File.ReadAllLines(agentManager.savePath)
+            .OfType<string>()
+            .ToList();
     }
     
     void LateUpdate()
