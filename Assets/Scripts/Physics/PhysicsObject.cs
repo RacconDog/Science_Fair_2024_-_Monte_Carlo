@@ -5,17 +5,17 @@ public class PhysicsObject : MonoBehaviour
     public Vector2 velocity{ get; private set; }
     public Vector2 acceration{ get; private set; }
 
-    [SerializeField] const float speedCap;
+    [SerializeField] const float speedCap = 0;
 
-    [SerializeField] const float staticFriction; 
-    [SerializeField] const float kineticFriction; 
+    [SerializeField] const float staticFriction = 0; 
+    [SerializeField] const float kineticFriction = 0; 
 
     //when to switch between static and dynamic friction based on speed
-    [SerializeField] const float staticKineticBoundary;
+    [SerializeField] const float staticKineticBoundary = 0;
 
-    [SerializeFields] const float gravity;
+    [SerializeFields] const float gravity = 0;
 
-    [SerializeField] const float mass;
+    [SerializeField] const float mass = 0;
 
     [SerializeField] float floorTheta = 0;
 
@@ -27,7 +27,7 @@ public class PhysicsObject : MonoBehaviour
     void Update()
     {
         //apply acceration
-        velocity += acceration
+        velocity += acceration;
 
         //apply friction
         if (velocity.magnitude < staticKineticBoundary)
