@@ -681,7 +681,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1120279036}
-  - component: {fileID: 1120279035}
   m_Layer: 0
   m_Name: Agent Manager
   m_TagString: Untagged
@@ -689,23 +688,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1120279035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120279034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afe5c7d695d53724ab921368c5ee7c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  childrenPerGenertaion: 0
-  lifeTime: 500
-  agentPrefab: {fileID: 8731655110817429047, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
-  fittestAgent: {fileID: 1849203300}
-  jumpChance: 15
 --- !u!4 &1120279036
 Transform:
   m_ObjectHideFlags: 0
