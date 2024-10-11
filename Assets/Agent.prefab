@@ -48,8 +48,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4f95358831e2f4380ad3d12147ae75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugLineIndex: 0
-  lineIndex: 0
   lines: []
   additiveMutation: []
 --- !u!114 &384695697599752932
@@ -66,7 +64,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   jumpForce: 200
-  dir: 0
   debugControlMode: 0
 --- !u!212 &-3809271493581384357
 SpriteRenderer:

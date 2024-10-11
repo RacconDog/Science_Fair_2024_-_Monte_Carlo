@@ -19,16 +19,17 @@ public class InternalMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        if (debugControlMode)
-        {
-            playerInput = GetComponent<PlayerInput>();
-            moveAction = playerInput.actions["Move"];
-            jumpAction = playerInput.actions["Jump"];
-        }
+        // if (debugControlMode)
+        // {
+        //     playerInput = GetComponent<PlayerInput>();
+        //     moveAction = playerInput.actions["Move"];
+        //     jumpAction = playerInput.actions["Jump"];
+        // }
     }
 
-    void Update()
+    void FixedUpdate()
     {
+        // Jump(1);
         if (debugControlMode)
         {
             dir = moveAction.ReadValue<Vector2>().x;

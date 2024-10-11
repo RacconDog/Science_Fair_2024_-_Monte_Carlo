@@ -22,7 +22,7 @@ public class MonteCarloPlayer : MonoBehaviour
     // float fitnessScore;
 
     void Start()
-    {
+    {   
         internalMovement = GetComponent<InternalMovement>();
         agentManager = GameObject.Find("Agent Manager").GetComponent<AgentManager>();
 
@@ -40,7 +40,7 @@ public class MonteCarloPlayer : MonoBehaviour
         lines = File.ReadAllLines("Save.txt").OfType<string>().ToList();
     }
     
-    void LateUpdate()
+    void FixedUpdate()
     {
         string curLine = "10";
         

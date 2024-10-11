@@ -706,7 +706,6 @@ MonoBehaviour:
   agentPrefab: {fileID: 8731655110817429047, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
   fittestAgent: {fileID: 1849203300}
   jumpChance: 15
-  curGen: 0
 --- !u!4 &1120279036
 Transform:
   m_ObjectHideFlags: 0
