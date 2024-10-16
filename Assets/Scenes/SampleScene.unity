@@ -126,10 +126,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 384695697599752932, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
-      propertyPath: debugControlMode
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.546
@@ -176,7 +172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8731655110817429047, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -681,6 +677,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1120279036}
+  - component: {fileID: 1120279037}
   m_Layer: 0
   m_Name: Agent Manager
   m_TagString: Untagged
@@ -703,6 +700,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1120279037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120279034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58fd225584691493498c6fee9218f964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  savePath: Science_Fair_2024_-_Monte_Carlo/Assets/Save.txt
+  childrenPerGenertaion: 0
+  lifeTime: 1000
+  agentPrefab: {fileID: 8731655110817429047, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+  fittestAgent: {fileID: 0}
+  jumpChance: 15
 --- !u!1 &1786937307
 GameObject:
   m_ObjectHideFlags: 0

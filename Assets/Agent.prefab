@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6235563224992218421}
-  - component: {fileID: 2957366685060888780}
-  - component: {fileID: 384695697599752932}
   - component: {fileID: -3809271493581384357}
   - component: {fileID: 6184540714321084314}
   - component: {fileID: -2142092030268640399}
+  - component: {fileID: 5598919140206679112}
+  - component: {fileID: 2050358000118306254}
   m_Layer: 6
   m_Name: Agent
   m_TagString: Untagged
@@ -36,35 +36,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2957366685060888780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8731655110817429047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b4f95358831e2f4380ad3d12147ae75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lines: []
-  additiveMutation: []
---- !u!114 &384695697599752932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8731655110817429047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f822587bb2a244642b322e248293451c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3
-  jumpForce: 200
-  debugControlMode: 0
 --- !u!212 &-3809271493581384357
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -193,3 +164,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5598919140206679112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8731655110817429047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e39159de60544622922228a60b952d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  jumpForce: 5
+  debugControlMode: 0
+--- !u!114 &2050358000118306254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8731655110817429047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d208bde42a3714736ac43eedb44de181, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lines: []
+  additiveMutation: []

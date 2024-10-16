@@ -5,8 +5,8 @@ using System.Linq;
 
 public class AgentManager : MonoBehaviour
 {
-    [HideInInspector] public string savePath = 
-        "Science_Fair_2024_-_Monte_Carlo/Assets/Save.txt";
+    [HideInInspector] public string savePath;
+    
     [SerializeField] float childrenPerGenertaion = 0;
     [SerializeField] int lifeTime = 0;
 
@@ -18,6 +18,12 @@ public class AgentManager : MonoBehaviour
     [SerializeField] float jumpChance = 15;
 
     int curGen = 0;
+
+    void Awake()
+    {
+        print(Application.persistentDataPath);
+        savePath = Path.Combine(Application.persistentDataPath, "Assets/Save.txt");
+    }
 
     public void ClearGen()
     {

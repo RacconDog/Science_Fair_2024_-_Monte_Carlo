@@ -10,7 +10,7 @@ public class MonteCarloPlayer : MonoBehaviour
 {
     PlayerInput playerInput;
 
-    InternalMovement internalMovement;
+    LowLevelMovement lowLevelMovement;
 
     int lineIndex = 0;
 
@@ -23,7 +23,7 @@ public class MonteCarloPlayer : MonoBehaviour
 
     void Start()
     {   
-        internalMovement = GetComponent<InternalMovement>();
+        lowLevelMovement = GetComponent<LowLevelMovement>();
         agentManager = GameObject.Find("Agent Manager").GetComponent<AgentManager>();
 
         // additiveMutation = mcGen.GenAdditiveMutaion(agentManager.lifeTime);
@@ -56,8 +56,8 @@ public class MonteCarloPlayer : MonoBehaviour
 
             // print($"{lineIndex}: {move}, {jump}");
 
-            internalMovement.AlterMoveDir(move);
-            internalMovement.Jump(jump);
+            lowLevelMovement.AlterMoveDir(move);
+            lowLevelMovement.Jump(jump);
 
             lineIndex++;
         }
