@@ -22,11 +22,12 @@ public class AgentManager : MonoBehaviour
     void Awake()
     {
         print(Application.persistentDataPath);
-        savePath = Path.Combine(Application.persistentDataPath, "Assets/Save.txt");
+        savePath = Path.Combine(Application.persistentDataPath, "Save.txt");
     }
 
     public void ClearGen()
     {
+        savePath = Path.Combine(Application.persistentDataPath, "Save.txt");
         File.WriteAllText(savePath, string.Empty);
         print("Clear Gen");
     }
@@ -38,7 +39,10 @@ public class AgentManager : MonoBehaviour
         // Delete last line (which was an empty line)
         var lines = System.IO.File.ReadAllLines(savePath);
 
-        print("Test Gen");
+        for(int i = 0; i < lines.Length; i++)
+        {
+            print(lines[i]);
+        }
     }
 
     public string[] GenerateGenes(int g_lifeTime)
