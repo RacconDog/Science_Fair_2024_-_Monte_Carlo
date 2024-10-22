@@ -21,13 +21,23 @@ public class AgentManager : MonoBehaviour
 
     void Awake()
     {
-        print(Application.persistentDataPath);
-        savePath = Path.Combine(Application.persistentDataPath, "Save.txt");
+        //print(Application.persistentDataPath);
+        string savePath = Application.dataPath + "/Assets/Save.txt";
+        
+        if (File.Exists(savePath))
+        {
+            string content = File.ReadAllText(savePath);
+            Debug.Log(content);
+        }
+        else
+        {
+            Debug.LogError("File not found");
+        }
+        //savePath = Path.Combine(Application.persistentDataPath, "Save.txt");
     }
 
     public void ClearGen()
     {
-        savePath = Path.Combine(Application.persistentDataPath, "Save.txt");
         File.WriteAllText(savePath, string.Empty);
         print("Clear Gen");
     }
