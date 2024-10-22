@@ -53,7 +53,7 @@ public class AgentManager : MonoBehaviour
     {
         using (StreamWriter writer = new StreamWriter(savePath, false))
         {
-            writer.WriteLine("penis");
+            writer.WriteLine("Test");
             for (int i = 0; i < arrayToWrite.Length; i++)
             {
                 writer.WriteLine(arrayToWrite[i] + "\n");
