@@ -712,8 +712,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fd225584691493498c6fee9218f964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  savePath: Science_Fair_2024_-_Monte_Carlo/Assets/Save.txt
-  childrenPerGenertaion: 0
+  savePath: /Users/cedar/Library/Application Support/DefaultCompany/Weston & Kai
+    Science Fair 2024/Save.txt
+  childrenPerGenertaion: 500
   lifeTime: 1000
   agentPrefab: {fileID: 8731655110817429047, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
   fittestAgent: {fileID: 0}
