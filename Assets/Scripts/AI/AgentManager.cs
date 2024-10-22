@@ -13,17 +13,14 @@ public class AgentManager : MonoBehaviour
     [SerializeField] GameObject agentPrefab;
     [SerializeField] GameObject fittestAgent;
 
-    // List<MonteCarloPlayer> aliveAgents = new List<MonteCarloPlayer>();
-
     [SerializeField] float jumpChance = 15;
 
     int curGen = 0;
 
     void Awake()
     {
-        //print(Application.persistentDataPath);
-        string savePath = Application.dataPath + "/Assets/Save.txt";
-        
+        savePath = Path.Combine(Application.persistentDataPath, "Save.txt");
+
         if (File.Exists(savePath))
         {
             string content = File.ReadAllText(savePath);
@@ -31,30 +28,41 @@ public class AgentManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("File not found");
+            Debug.LogError("File not found" + savePath);
         }
-        //savePath = Path.Combine(Application.persistentDataPath, "Save.txt");
     }
 
     public void ClearGen()
     {
         File.WriteAllText(savePath, string.Empty);
         print("Clear Gen");
+        Debug.Log("Clear Gen");
     }
 
     public void TestGen()
-    {        
-        File.WriteAllLines(savePath, GenerateGenes(lifeTime));
+    {   
+        print(savePath);
+        string[] genes = GenerateGenes(lifeTime);
 
-        // Delete last line (which was an empty line)
-        var lines = System.IO.File.ReadAllLines(savePath);
+        SWWriteAllLines(genes);
 
-        for(int i = 0; i < lines.Length; i++)
-        {
-            print(lines[i]);
-        }
+        Debug.Log(genes[0]);
     }
 
+    void SWWriteAllLines(string[] arrayToWrite)
+    {
+        using (StreamWriter writer = new StreamWriter(savePath, false))
+        {
+            writer.WriteLine("penis");
+            for (int i = 0; i < arrayToWrite.Length; i++)
+            {
+                writer.WriteLine(arrayToWrite[i] + "\n");
+            }
+        }
+
+        Debug.Log("Array written to file with newline characters.");
+    }
+    //for the length of the aray, wright that aray in [i] + /n
     public string[] GenerateGenes(int g_lifeTime)
     {
         string[] returnArray = new string[g_lifeTime];

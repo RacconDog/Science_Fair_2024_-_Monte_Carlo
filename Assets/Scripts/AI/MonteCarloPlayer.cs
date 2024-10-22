@@ -26,12 +26,6 @@ public class MonteCarloPlayer : MonoBehaviour
         lowLevelMovement = GetComponent<LowLevelMovement>();
         agentManager = GameObject.Find("Agent Manager").GetComponent<AgentManager>();
 
-        // additiveMutation = mcGen.GenAdditiveMutaion(agentManager.lifeTime);
-        for (int i = 0; i < additiveMutation.Count; i++)
-        {
-            // lines.
-        }
-
         TestPlayer();
     }
 
