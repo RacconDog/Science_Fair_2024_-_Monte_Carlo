@@ -62,7 +62,7 @@ public class AgentManager : MonoBehaviour
 
         Debug.Log("Array written to file with newline characters.");
     }
-    //for the length of the aray, wright that aray in [i] + /n
+    //for the length of the aray, write that aray in [i] + /n
     public string[] GenerateGenes(int g_lifeTime)
     {
         string[] returnArray = new string[g_lifeTime];

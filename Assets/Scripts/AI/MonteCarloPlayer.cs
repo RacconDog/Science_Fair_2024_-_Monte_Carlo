@@ -38,22 +38,45 @@ public class MonteCarloPlayer : MonoBehaviour
     
     void FixedUpdate()
     {
-        string curLine = "10";
-        
+        string curLine = "10"; // Default value
+
         if (lineIndex < lines.Count)
         {
-            curLine = lines[lineIndex];
+            curLine = lines[lineIndex].Trim();  // Trim spaces or newlines
+
+        // Log the line to see what is being processed
+            Debug.Log($"Processing line {lineIndex}: '{curLine}'");
 
             string[] columns = curLine.Split(",");
-            int move = Int32.Parse(columns[0]);
-            int jump = Int32.Parse(columns[1]);
 
-            // print($"{lineIndex}: {move}, {jump}");
+            if (columns.Length < 2)
+            {
+                Debug.LogError($"Invalid line format: Less than 2 columns. Line content: '{curLine}'");
+                lineIndex++;  // Move to the next line, so we don’t get stuck
+                return; // Skip processing this line
+            }
 
-            lowLevelMovement.AlterMoveDir(move);
-            lowLevelMovement.Jump(jump);
+        // Try parsing the first column as move
+            if (int.TryParse(columns[0].Trim(), out int move))
+            {
+            // Try parsing the second column as jump
+                if (int.TryParse(columns[1].Trim(), out int jump))
+                {
+                // Both parsed successfully
+                    lowLevelMovement.AlterMoveDir(move);
+                    lowLevelMovement.Jump(jump);
+                }
+                else
+                {
+                    Debug.LogError($"Invalid jump value at line {lineIndex}: '{columns[1]}'");
+                }
+            }
+            else
+            {
+                Debug.LogError($"Invalid move value at line {lineIndex}: '{columns[0]}'");
+            }
 
-            lineIndex++;
+            lineIndex++; // Move to the next line after processing
         }
     }
 
