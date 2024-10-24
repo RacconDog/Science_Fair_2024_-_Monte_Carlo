@@ -65,7 +65,7 @@ public class AgentManager : MonoBehaviour
 
         using (StreamWriter writer = new StreamWriter(savePath, false))  // false means overwrite the file
         {
-            writer.WriteLine("0,0");  // Writes the initial line "0,0"
+            writer.WriteLine(GenerateGenes(lifeTime));  // Writes the initial line "0,0"
             
             for (int i = 0; i < arrayToWrite.Length; i++)
             {

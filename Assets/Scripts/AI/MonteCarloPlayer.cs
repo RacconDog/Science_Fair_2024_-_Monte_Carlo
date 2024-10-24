@@ -45,7 +45,6 @@ public class MonteCarloPlayer : MonoBehaviour
             curLine = lines[lineIndex].Trim();  // Trim spaces or newlines
 
         // Log the line to see what is being processed
-            Debug.Log($"Processing line {lineIndex}: '{curLine}'");
 
             string[] columns = curLine.Split(",");
 
