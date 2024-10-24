@@ -51,17 +51,31 @@ public class AgentManager : MonoBehaviour
 
     void SWWriteAllLines(string[] arrayToWrite)
     {
-        using (StreamWriter writer = new StreamWriter(savePath, false))
+        string savePath = Path.Combine(Application.persistentDataPath, "Save.txt");
+
+        // Ensure the directory exists
+        string directoryPath = Path.GetDirectoryName(savePath);
+        if (!Directory.Exists(directoryPath))
         {
-            writer.WriteLine("Test");
+            Directory.CreateDirectory(directoryPath);  // Create the directory if it doesn't exist
+        }
+
+        // Log the path to see if it's correct
+        Debug.Log($"Saving to: {savePath}");
+
+        using (StreamWriter writer = new StreamWriter(savePath, false))  // false means overwrite the file
+        {
+            writer.WriteLine("0,0");  // Writes the initial line "0,0"
+            
             for (int i = 0; i < arrayToWrite.Length; i++)
             {
-                writer.WriteLine(arrayToWrite[i] + "\n");
+                writer.WriteLine(arrayToWrite[i]);  // WriteLine already appends a newline
             }
         }
 
-        Debug.Log("Array written to file with newline characters.");
+        Debug.Log("Array written to Save.txt file.");
     }
+
     //for the length of the aray, write that aray in [i] + /n
     public string[] GenerateGenes(int g_lifeTime)
     {
