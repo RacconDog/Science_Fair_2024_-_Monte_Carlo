@@ -34,9 +34,22 @@ public class AgentManager : MonoBehaviour
 
     public void ClearGen()
     {
-        File.WriteAllText(savePath, string.Empty);
-        print("Clear Gen");
-        Debug.Log("Clear Gen");
+        string savePath = Path.Combine(Application.persistentDataPath, "Save.txt");
+
+        // Ensure the directory exists
+        string directoryPath = Path.GetDirectoryName(savePath);
+        if (!Directory.Exists(directoryPath))
+        {
+            Directory.CreateDirectory(directoryPath);  // Create the directory if it doesn't exist
+        }
+
+        // Open the file in overwrite mode without writing anything to it
+        using (StreamWriter writer = new StreamWriter(savePath, false))
+        {
+            // Do nothing, this clears the file by opening and closing in overwrite mode
+        }
+
+        Debug.Log("Save.txt file cleared.");
     }
 
     public void TestGen()
