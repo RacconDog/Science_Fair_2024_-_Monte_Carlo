@@ -38,13 +38,11 @@ public class MonteCarloPlayer : MonoBehaviour
     
     void FixedUpdate()
     {
-        string curLine = "10"; // Default value
+        string curLine = "10";
 
         if (lineIndex < lines.Count)
         {
-            curLine = lines[lineIndex].Trim();  // Trim spaces or newlines
-
-        // Log the line to see what is being processed
+            curLine = lines[lineIndex].Trim();
 
             string[] columns = curLine.Split(",");
 
@@ -52,7 +50,7 @@ public class MonteCarloPlayer : MonoBehaviour
             {
                 Debug.LogError($"Invalid line format: Less than 2 columns. Line content: '{curLine}'");
                 lineIndex++;  // Move to the next line, so we don’t get stuck
-                return; // Skip processing this line
+                return;
             }
 
         // Try parsing the first column as move
@@ -75,7 +73,7 @@ public class MonteCarloPlayer : MonoBehaviour
                 Debug.LogError($"Invalid move value at line {lineIndex}: '{columns[0]}'");
             }
 
-            lineIndex++; // Move to the next line after processing
+            lineIndex++;
         }
     }
 

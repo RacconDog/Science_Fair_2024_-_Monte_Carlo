@@ -40,7 +40,7 @@ public class AgentManager : MonoBehaviour
         string directoryPath = Path.GetDirectoryName(savePath);
         if (!Directory.Exists(directoryPath))
         {
-            Directory.CreateDirectory(directoryPath);  // Create the directory if it doesn't exist
+            Directory.CreateDirectory(directoryPath);
         }
 
         // Open the file in overwrite mode without writing anything to it
@@ -70,7 +70,7 @@ public class AgentManager : MonoBehaviour
         string directoryPath = Path.GetDirectoryName(savePath);
         if (!Directory.Exists(directoryPath))
         {
-            Directory.CreateDirectory(directoryPath);  // Create the directory if it doesn't exist
+            Directory.CreateDirectory(directoryPath);
         }
 
         // Log the path to see if it's correct
@@ -82,14 +82,13 @@ public class AgentManager : MonoBehaviour
             
             for (int i = 0; i < arrayToWrite.Length; i++)
             {
-                writer.WriteLine(arrayToWrite[i]);  // WriteLine already appends a newline
+                writer.WriteLine(arrayToWrite[i]);
             }
         }
 
         Debug.Log("Array written to Save.txt file.");
     }
 
-    //for the length of the aray, write that aray in [i] + /n
     public string[] GenerateGenes(int g_lifeTime)
     {
         string[] returnArray = new string[g_lifeTime];
