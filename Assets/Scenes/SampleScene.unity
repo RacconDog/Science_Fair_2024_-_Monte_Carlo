@@ -715,7 +715,7 @@ MonoBehaviour:
   savePath: /Users/cedar/Library/Application Support/DefaultCompany/Weston & Kai
     Science Fair 2024/Save.txt
   childrenPerGenertaion: 500
-  lifeTime: 1000
+  lifeTime: 10
   agentPrefab: {fileID: 8731655110817429047, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
   fittestAgent: {fileID: 0}
   jumpChance: 15
