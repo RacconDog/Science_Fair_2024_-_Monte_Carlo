@@ -19,7 +19,7 @@ public class AgentManager : MonoBehaviour
 
     void Awake()
     {
-        savePath = Path.Combine(Application.persistentDataPath, "Save.txt");
+        savePath = Path.Combine(Application.dataPath, "Save.txt");
 
         if (File.Exists(savePath))
         {
@@ -34,7 +34,7 @@ public class AgentManager : MonoBehaviour
 
     public void ClearGen()
     {
-        string savePath = Path.Combine(Application.persistentDataPath, "Save.txt");
+        string savePath = Path.Combine(Application.dataPath, "Save.txt");
 
         // Ensure the directory exists
         string directoryPath = Path.GetDirectoryName(savePath);
@@ -64,7 +64,7 @@ public class AgentManager : MonoBehaviour
 
     void SWWriteAllLines(string[] arrayToWrite)
     {
-        string savePath = Path.Combine(Application.persistentDataPath, "Save.txt");
+        string savePath = Path.Combine(Application.dataPath, "Save.txt");
 
         // Ensure the directory exists
         string directoryPath = Path.GetDirectoryName(savePath);
