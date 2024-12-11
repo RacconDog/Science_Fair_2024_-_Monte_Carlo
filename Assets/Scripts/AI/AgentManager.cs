@@ -6,14 +6,16 @@ using System.Linq;
 public class AgentManager : MonoBehaviour
 {
     [HideInInspector] public string savePath;
-    
-    [SerializeField] float childrenPerGenertaion = 0;
-    [SerializeField] int lifeTime = 0;
-
     [SerializeField] GameObject agentPrefab;
-    [SerializeField] GameObject fittestAgent;
+    
+    [SerializeField] float childrenPerGenertaion;
+    [SerializeField] public int framesPerGeneration;
+    [SerializeField] float jumpChance;
 
-    [SerializeField] float jumpChance = 15;
+    [SerializeField] public GameObject fittestAgent;
+    [SerializeField] public float highFitnessScore;
+
+    [SerializeField] public int deadChildren;
 
     int curGen = 0;
 
@@ -55,12 +57,12 @@ public class AgentManager : MonoBehaviour
     public void TestGen()
     {   
         print(savePath);
-        string[] genes = GenerateGenes(lifeTime);
+        string[] genes = GenerateGenes(framesPerGeneration);
 
-        SWWriteAllLines(genes);
+        WriteToSave(genes);
     }
 
-    void SWWriteAllLines(string[] arrayToWrite)
+    public void WriteToSave(string[] arrayToWrite)
     {
         string savePath = Path.Combine(Application.dataPath, "Save.txt");
 
@@ -70,7 +72,6 @@ public class AgentManager : MonoBehaviour
         {
             Directory.CreateDirectory(directoryPath);
         }
-
         // Log the path to see if it's correct
         Debug.Log($"Saving to: {savePath}");
 
@@ -85,10 +86,10 @@ public class AgentManager : MonoBehaviour
         Debug.Log("Array written to Save.txt file.");
     }
 
-    public string[] GenerateGenes(int g_lifeTime)
+    public string[] GenerateGenes(int g_FramesPerGeneration)
     {
-        string[] returnArray = new string[g_lifeTime];
-        for (int i = 0; i < g_lifeTime; i++)
+        string[] returnArray = new string[g_FramesPerGeneration];
+        for (int i = 0; i < g_FramesPerGeneration; i++)
         {
             // Random int between -1 and 1
             int moveResult = Random.Range(-1, 2);

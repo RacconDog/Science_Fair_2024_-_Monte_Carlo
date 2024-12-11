@@ -132,11 +132,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.546
+      value: 0.76
       objectReference: {fileID: 0}
     - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.484
+      value: 0.66
       objectReference: {fileID: 0}
     - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
       propertyPath: m_LocalPosition.z
@@ -176,7 +176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8731655110817429047, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -672,6 +672,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1116734743
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5598919140206679112, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: debugControlMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.30400002
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6235563224992218421, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731655110817429047, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: m_Name
+      value: Agent (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731655110817429047, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
 --- !u!1 &1120279034
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,7 +784,7 @@ MonoBehaviour:
   savePath: /Users/cedar/Library/Application Support/DefaultCompany/Weston & Kai
     Science Fair 2024/Save.txt
   childrenPerGenertaion: 500
-  lifeTime: 10
+  lifeTime: 100
   agentPrefab: {fileID: 8731655110817429047, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
   fittestAgent: {fileID: 0}
   jumpChance: 15
@@ -988,3 +1053,4 @@ SceneRoots:
   - {fileID: 1120279036}
   - {fileID: 1849203301}
   - {fileID: 286952312}
+  - {fileID: 1116734743}

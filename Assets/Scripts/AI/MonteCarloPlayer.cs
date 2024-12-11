@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.IO;
-using System;
-using Unity.VisualScripting;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,35 +12,45 @@ public class MonteCarloPlayer : MonoBehaviour
 
     int lineIndex = 0;
 
-    public List<string> lines = new List<string>();
+    public List<string> genes = new List<string>();
     public List<string> additiveMutation = new List<string>();
 
     AgentManager agentManager;
-
-    // float fitnessScore;
 
     void Start()
     {   
         lowLevelMovement = GetComponent<LowLevelMovement>();
         agentManager = GameObject.Find("Agent Manager").GetComponent<AgentManager>();
 
-        TestPlayer();
-    }
-
-    public void TestPlayer()
-    {
-        lines = File.ReadAllLines(agentManager.savePath)
+        genes = File.ReadAllLines(agentManager.savePath)
             .OfType<string>()
             .ToList();
+
+        genes.
     }
     
     void FixedUpdate()
     {
-        string curLine = "10";
+        string curLine = " 0,0";
+        int move = 0;
+        int jump = 0;
 
-        if (lineIndex < lines.Count)
+        if (lineIndex > agentManager.framesPerGeneration)
         {
-            curLine = lines[lineIndex].Trim();
+            agentManager.deadChildren += 1;
+            
+            if(FitnessScore() > agentManager.highFitnessScore)
+            {
+                agentManager.highFitnessScore = FitnessScore();
+                agentManager.WriteToSave(ameObject);
+            }
+
+            Destroy(this);
+        }
+        
+        if (lineIndex < genes.Count)
+        {
+            curLine = genes[lineIndex].Trim();
 
             string[] columns = curLine.Split(",");
 
@@ -53,15 +61,12 @@ public class MonteCarloPlayer : MonoBehaviour
                 return;
             }
 
-        // Try parsing the first column as move
-            if (int.TryParse(columns[0].Trim(), out int move))
+            if (int.TryParse(columns[0].Trim(), out move))
             {
             // Try parsing the second column as jump
-                if (int.TryParse(columns[1].Trim(), out int jump))
+                if (int.TryParse(columns[1].Trim(), out jump))
                 {
                 // Both parsed successfully
-                    lowLevelMovement.AlterMoveDir(move);
-                    lowLevelMovement.Jump(jump);
                 }
                 else
                 {
@@ -73,11 +78,16 @@ public class MonteCarloPlayer : MonoBehaviour
                 Debug.LogError($"Invalid move value at line {lineIndex}: '{columns[0]}'");
             }
 
+            // lowLevelMovement.Jump(jump);
             lineIndex++;
         }
+
+
+        lowLevelMovement.AlterMoveDir(move);
+        lowLevelMovement.AlterMoveDir(jump);
     }
 
-    public float EvaulateFitnessScore()
+    public float FitnessScore()
     {
         return transform.position.x;
     }
