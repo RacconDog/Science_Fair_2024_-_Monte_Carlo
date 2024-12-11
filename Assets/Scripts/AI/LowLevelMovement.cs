@@ -19,12 +19,12 @@ public class LowLevelMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        // if (debugControlMode)
-        // {
-        //     playerInput = GetComponent<PlayerInput>();
-        //     moveAction = playerInput.actions["Move"];
-        //     jumpAction = playerInput.actions["Jump"];
-        // }
+        if (debugControlMode)
+        {
+            playerInput = GetComponent<PlayerInput>();
+            moveAction = playerInput.actions["Move"];
+            jumpAction = playerInput.actions["Jump"];
+        }
     }
 
     void FixedUpdate()

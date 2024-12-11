@@ -58,8 +58,6 @@ public class AgentManager : MonoBehaviour
         string[] genes = GenerateGenes(lifeTime);
 
         SWWriteAllLines(genes);
-
-        Debug.Log(genes[0]);
     }
 
     void SWWriteAllLines(string[] arrayToWrite)
@@ -77,9 +75,7 @@ public class AgentManager : MonoBehaviour
         Debug.Log($"Saving to: {savePath}");
 
         using (StreamWriter writer = new StreamWriter(savePath, false))  // false means overwrite the file
-        {
-            writer.WriteLine(GenerateGenes(lifeTime));  // Writes the initial line "0,0"
-            
+        {            
             for (int i = 0; i < arrayToWrite.Length; i++)
             {
                 writer.WriteLine(arrayToWrite[i]);
