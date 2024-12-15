@@ -14,9 +14,14 @@ public class AgentManagerEditor : Editor
             agentManager.ClearGen();
         }
 
-        if(GUILayout.Button("Test Generation"))
+        if(GUILayout.Button("Generate New Genes"))
         {
-            agentManager.TestGen();
+            agentManager.NewGenes();
+        }
+
+        if(GUILayout.Button("BirthNewChildren"))
+        {
+            agentManager.BirthNewChildren();
         }
     }
 }

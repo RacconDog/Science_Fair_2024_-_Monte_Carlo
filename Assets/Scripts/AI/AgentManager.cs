@@ -2,41 +2,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Linq;
+using System;
+using Random = UnityEngine.Random;
+using UnityEditor;
 
 public class AgentManager : MonoBehaviour
 {
     [HideInInspector] public string savePath;
     [SerializeField] GameObject agentPrefab;
     
-    [SerializeField] float childrenPerGenertaion;
+    [SerializeField] float childrenPerGeneration;
     [SerializeField] public int framesPerGeneration;
     [SerializeField] float jumpChance;
 
+    [SerializeField] public string curGenesPath;
+    [SerializeField] public string totalGenesPath;
+
+    [Header("Debug: ---> Don't edit!!! <----")]
     [SerializeField] public GameObject fittestAgent;
     [SerializeField] public float highFitnessScore;
-
-    [SerializeField] public int deadChildren;
+    [SerializeField] public Vector2 parentPos;
+    public List<GameObject> deadChildren = new List<GameObject>();
 
     int curGen = 0;
 
     void Awake()
     {
-        savePath = Path.Combine(Application.dataPath, "Save.txt");
+        
+        savePath = Path.Combine(Application.dataPath, curGenesPath);
 
         if (File.Exists(savePath))
         {
             string content = File.ReadAllText(savePath);
-            Debug.Log(content);
+                // Debug.Log(content);
         }
         else
         {
             Debug.LogError("File not found" + savePath);
         }
     }
+    public void BirthNewChildren()
+    {
+        // totalGenes = 
+        for (int i = 0; i < deadChildren.Count; i++)
+        {
+            Destroy(deadChildren[i]);
+        }
+
+        deadChildren.Clear();
+
+        for(int i = 0; i < childrenPerGeneration; i++)
+        {
+            Instantiate(agentPrefab, parentPos, Quaternion.identity);
+        }
+    }
 
     public void ClearGen()
     {
-        string savePath = Path.Combine(Application.dataPath, "Save.txt");
+        string savePath = Path.Combine(Application.dataPath, curGenesPath);
 
         // Ensure the directory exists
         string directoryPath = Path.GetDirectoryName(savePath);
@@ -51,20 +74,20 @@ public class AgentManager : MonoBehaviour
             // Do nothing, this clears the file by opening and closing in overwrite mode
         }
 
-        Debug.Log("Save.txt file cleared.");
+        Debug.Log(curGenesPath + " file cleared.");
     }
 
-    public void TestGen()
+    public void NewGenes()
     {   
         print(savePath);
         string[] genes = GenerateGenes(framesPerGeneration);
 
-        WriteToSave(genes);
+        WriteToSave(genes, curGenesPath);
     }
-
-    public void WriteToSave(string[] arrayToWrite)
+    
+    public void WriteToSave(string[] arrayToWrite, string path)
     {
-        string savePath = Path.Combine(Application.dataPath, "Save.txt");
+        string savePath = Path.Combine(Application.dataPath, path);
 
         // Ensure the directory exists
         string directoryPath = Path.GetDirectoryName(savePath);
@@ -72,8 +95,8 @@ public class AgentManager : MonoBehaviour
         {
             Directory.CreateDirectory(directoryPath);
         }
-        // Log the path to see if it's correct
-        Debug.Log($"Saving to: {savePath}");
+        // // Log the path to see if it's correct
+        // Debug.Log($"Saving to: {savePath}");
 
         using (StreamWriter writer = new StreamWriter(savePath, false))  // false means overwrite the file
         {            
@@ -83,7 +106,7 @@ public class AgentManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Array written to Save.txt file.");
+        Debug.Log("Array written to" + path + "file.");
     }
 
     public string[] GenerateGenes(int g_FramesPerGeneration)

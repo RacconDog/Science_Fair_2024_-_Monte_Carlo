@@ -12,9 +12,10 @@ public class LowLevelMovement : MonoBehaviour
     Rigidbody2D rb;
 
     [SerializeField] bool debugControlMode;
- 
-    float dir;
-    bool isGrounded = false;
+    
+    [Header("Debug: ---> Don't edit!!! <----")]
+    [SerializeField] bool isGrounded = false;
+    [SerializeField] float dir;
 
     void Start()
     {
@@ -39,6 +40,7 @@ public class LowLevelMovement : MonoBehaviour
             }
         }
 
+        // print ("dir:  " + dir + "||| speed:  " + speed + "||| dir * speed:  " + dir*speed);
         rb.linearVelocityX = dir * speed;
     }
 
@@ -56,7 +58,7 @@ public class LowLevelMovement : MonoBehaviour
         {
             isGrounded = false;
             rb.linearVelocityY = 0;
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
 

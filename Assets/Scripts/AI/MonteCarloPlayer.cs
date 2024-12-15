@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 
 public class MonteCarloPlayer : MonoBehaviour
 {
@@ -10,10 +11,13 @@ public class MonteCarloPlayer : MonoBehaviour
 
     LowLevelMovement lowLevelMovement;
 
-    int lineIndex = 0;
+    [Header("Debug: ---> Don't edit!!! <----")]
+    [SerializeField] int lineIndex = 0;
+    [SerializeField] int jump;
+    [SerializeField] int move;
+    [SerializeField] bool isDead = false;
 
-    public List<string> genes = new List<string>();
-    public List<string> additiveMutation = new List<string>();
+    List<string> genes = new List<string>();
 
     AgentManager agentManager;
 
@@ -22,69 +26,77 @@ public class MonteCarloPlayer : MonoBehaviour
         lowLevelMovement = GetComponent<LowLevelMovement>();
         agentManager = GameObject.Find("Agent Manager").GetComponent<AgentManager>();
 
-        genes = File.ReadAllLines(agentManager.savePath)
+        List<string> parentGenes = File.ReadAllLines(agentManager.curGenesPath)
             .OfType<string>()
             .ToList();
 
-        genes.
+        List<string> additiveMutation 
+            = new List<string>(agentManager.GenerateGenes(agentManager.framesPerGeneration));
+
+        // genes.AddRange(parentGenes);
+        genes.AddRange(additiveMutation);
     }
     
     void FixedUpdate()
     {
         string curLine = " 0,0";
-        int move = 0;
-        int jump = 0;
 
-        if (lineIndex > agentManager.framesPerGeneration)
+        if (lineIndex == agentManager.framesPerGeneration && isDead == false)
         {
-            agentManager.deadChildren += 1;
+            isDead = true;
+            agentManager.deadChildren.Add(this.gameObject);
             
             if(FitnessScore() > agentManager.highFitnessScore)
             {
                 agentManager.highFitnessScore = FitnessScore();
-                agentManager.WriteToSave(ameObject);
+                agentManager.fittestAgent = this.gameObject;
+                agentManager.WriteToSave(genes.ToArray(), agentManager.curGenesPath);
+                agentManager.parentPos = this.transform.position;
             }
-
-            Destroy(this);
         }
         
         if (lineIndex < genes.Count)
         {
             curLine = genes[lineIndex].Trim();
 
-            string[] columns = curLine.Split(",");
+            string[] col = curLine.Split(",");
 
-            if (columns.Length < 2)
+            if (col.Length < 2)
             {
                 Debug.LogError($"Invalid line format: Less than 2 columns. Line content: '{curLine}'");
                 lineIndex++;  // Move to the next line, so we don’t get stuck
                 return;
             }
 
-            if (int.TryParse(columns[0].Trim(), out move))
+            if (int.TryParse(col[0].Trim(), out move))
             {
             // Try parsing the second column as jump
-                if (int.TryParse(columns[1].Trim(), out jump))
+                if (int.TryParse(col[1].Trim(), out jump))
                 {
-                // Both parsed successfully
                 }
                 else
                 {
-                    Debug.LogError($"Invalid jump value at line {lineIndex}: '{columns[1]}'");
+                    Debug.LogError($"Invalid jump value at line {lineIndex}: '{col[1]}'");
                 }
             }
             else
             {
-                Debug.LogError($"Invalid move value at line {lineIndex}: '{columns[0]}'");
+                Debug.LogError($"Invalid move value at line {lineIndex}: '{col[0]}'");
             }
 
-            // lowLevelMovement.Jump(jump);
             lineIndex++;
         }
 
-
+        if (isDead == true)
+        {
+            move = 0;
+            jump = 0;
+        }
+        // lowLevelMovement.Jump(jump);
         lowLevelMovement.AlterMoveDir(move);
-        lowLevelMovement.AlterMoveDir(jump);
+        lowLevelMovement.Jump(jump);
+
+
     }
 
     public float FitnessScore()
