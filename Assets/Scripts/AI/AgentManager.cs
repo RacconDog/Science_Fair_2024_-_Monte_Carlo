@@ -30,7 +30,7 @@ public class AgentManager : MonoBehaviour
     {
         
         savePath = Path.Combine(Application.dataPath, curGenesPath);
-
+        curGenesPath = "Assets/" + curGenesPath; 
         if (File.Exists(savePath))
         {
             string content = File.ReadAllText(savePath);
@@ -53,7 +53,7 @@ public class AgentManager : MonoBehaviour
 
         for(int i = 0; i < childrenPerGeneration; i++)
         {
-            Instantiate(agentPrefab, parentPos, Quaternion.identity);
+            Instantiate(agentPrefab, Vector3(0,0,0), Quaternion.identity);
         }
     }
 
@@ -106,7 +106,7 @@ public class AgentManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Array written to" + path + "file.");
+        Debug.Log("Array written to" + path + " file.");
     }
 
     public string[] GenerateGenes(int g_FramesPerGeneration)
