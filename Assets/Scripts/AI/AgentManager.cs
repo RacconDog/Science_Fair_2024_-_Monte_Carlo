@@ -53,7 +53,7 @@ public class AgentManager : MonoBehaviour
 
         for(int i = 0; i < childrenPerGeneration; i++)
         {
-            Instantiate(agentPrefab, Vector3(0,0,0), Quaternion.identity);
+            Instantiate(agentPrefab, parentPos, Quaternion.identity);
         }
     }
 
