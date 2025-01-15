@@ -181,6 +181,7 @@ MonoBehaviour:
   jumpForce: 5
   debugControlMode: 0
   isGrounded: 0
+  dir: 0
 --- !u!114 &2050358000118306254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +197,7 @@ MonoBehaviour:
   lineIndex: 0
   jump: 0
   move: 0
+  isDead: 0
 --- !u!114 &1054534863135892403
 MonoBehaviour:
   m_ObjectHideFlags: 0
