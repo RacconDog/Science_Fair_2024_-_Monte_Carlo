@@ -409,7 +409,19 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MarioSpritesBM_0: 6980959899654871206
+      MarioSpritesBM_1: 1950521046428703806
+      MarioSpritesBM_10: -2751195015496224020
+      MarioSpritesBM_11: -4633350112738069270
+      MarioSpritesBM_2: 3706826031501120533
+      MarioSpritesBM_3: 5538898939246370010
+      MarioSpritesBM_4: 8133058675849212039
+      MarioSpritesBM_5: -1235922720707011906
+      MarioSpritesBM_6: 1307378447293522250
+      MarioSpritesBM_7: -8870352290237079351
+      MarioSpritesBM_8: -6300800606273605652
+      MarioSpritesBM_9: -3685640057930708672
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
