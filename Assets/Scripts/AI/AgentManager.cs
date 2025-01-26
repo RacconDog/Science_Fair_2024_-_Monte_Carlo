@@ -24,11 +24,14 @@ public class AgentManager : MonoBehaviour
     [SerializeField] public Vector2 parentPos;
     public List<GameObject> deadChildren = new List<GameObject>();
 
+    [Header("Collision Settings")]
+    [SerializeField] private LayerMask collisionLayer; // Assign this to your block layer
+    [SerializeField] private float collisionCheckDistance = 0.1f;
+
     int curGen = 0;
 
     void Awake()
     {
-        
         savePath = Path.Combine(Application.dataPath, curGenesPath);
         curGenesPath = "Assets/" + curGenesPath; 
         if (File.Exists(savePath))
@@ -41,9 +44,48 @@ public class AgentManager : MonoBehaviour
             Debug.LogError("File not found" + savePath);
         }
     }
+
+    void Update()
+    {
+        HandleCollisions();
+    }
+
+    private void HandleCollisions()
+    {
+        foreach (GameObject agent in GameObject.FindGameObjectsWithTag("Agent"))
+        {
+            Rigidbody2D rb = agent.GetComponent<Rigidbody2D>();
+            if (rb == null) continue;
+
+            Vector2 position = rb.position;
+            Vector2 velocity = rb.linearVelocity;
+
+            // Horizontal collision check
+            Vector2 direction = velocity.x > 0 ? Vector2.right : Vector2.left;
+            RaycastHit2D horizontalHit = Physics2D.Raycast(position, direction, collisionCheckDistance, collisionLayer);
+
+            if (horizontalHit.collider != null)
+            {
+                velocity.x = 0; // Stop horizontal movement
+            }
+
+            // Ground collision check
+            Vector2 groundCheckPosition = position + new Vector2(0, -0.5f); // Adjust offset based on agent size
+            RaycastHit2D groundHit = Physics2D.Raycast(groundCheckPosition, Vector2.down, collisionCheckDistance, collisionLayer);
+
+            bool isGrounded = groundHit.collider != null;
+
+            if (isGrounded)
+            {
+                velocity.y = Mathf.Max(velocity.y, 0); // Prevent downward movement
+            }
+
+            rb.linearVelocity = velocity;
+        }
+    }
+
     public void BirthNewChildren()
     {
-        // totalGenes = 
         for (int i = 0; i < deadChildren.Count; i++)
         {
             Destroy(deadChildren[i]);
@@ -51,7 +93,7 @@ public class AgentManager : MonoBehaviour
 
         deadChildren.Clear();
 
-        for(int i = 0; i < childrenPerGeneration; i++)
+        for (int i = 0; i < childrenPerGeneration; i++)
         {
             Instantiate(agentPrefab, new Vector3(parentPos.x, 0, 0), Quaternion.identity);
         }
@@ -95,8 +137,6 @@ public class AgentManager : MonoBehaviour
         {
             Directory.CreateDirectory(directoryPath);
         }
-        // // Log the path to see if it's correct
-        // Debug.Log($"Saving to: {savePath}");
 
         using (StreamWriter writer = new StreamWriter(savePath, false))  // false means overwrite the file
         {            

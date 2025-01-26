@@ -26,6 +26,7 @@ public class LowLevelMovement : MonoBehaviour
             moveAction = playerInput.actions["Move"];
             jumpAction = playerInput.actions["Jump"];
         }
+
     }
 
     void FixedUpdate()
@@ -39,8 +40,7 @@ public class LowLevelMovement : MonoBehaviour
                 Jump(1);
             }
         }
-
-        // print ("dir:  " + dir + "||| speed:  " + speed + "||| dir * speed:  " + dir*speed);
+     // print ("dir:  " + dir + "||| speed:  " + speed + "||| dir * speed:  " + dir*speed);
         rb.linearVelocityX = dir * speed;
     }
 
@@ -49,11 +49,11 @@ public class LowLevelMovement : MonoBehaviour
         if (! debugControlMode)
         {
             dir = dirArg;
-        }
+         }
     }
 
     public void Jump(int shouldJump)
-    {
+     {
         if (isGrounded && shouldJump == 1)
         {
             isGrounded = false;
@@ -61,7 +61,6 @@ public class LowLevelMovement : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
-
     void OnCollisionExit2D(Collision2D other)
     {
         isGrounded = false;

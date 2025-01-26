@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Floor
+  - Agent
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - collisionLayer
   - Water
   - UI
   - Agent
