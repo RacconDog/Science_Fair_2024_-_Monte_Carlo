@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +18,8 @@ public class LowLevelMovement : MonoBehaviour
     [SerializeField] bool isGrounded = false;
     [SerializeField] float dir;
 
+    SpriteRenderer sprite;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,6 +30,7 @@ public class LowLevelMovement : MonoBehaviour
             jumpAction = playerInput.actions["Jump"];
         }
 
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     void FixedUpdate()
@@ -42,6 +46,12 @@ public class LowLevelMovement : MonoBehaviour
         }
      // print ("dir:  " + dir + "||| speed:  " + speed + "||| dir * speed:  " + dir*speed);
         rb.linearVelocityX = dir * speed;
+
+        bool flip = true;
+
+        if(dir == 1) {flip = false;} else {flip = true;}
+        sprite.flipX = flip;
+
     }
 
     public void AlterMoveDir(float dirArg)
@@ -68,7 +78,12 @@ public class LowLevelMovement : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D other)
     {
-        if (other.gameObject.tag != "Floor") return;
-        isGrounded = true;
+        if (other.gameObject.tag == "deathBlock") 
+        {
+            // GameObject.Find("Agent Manager").GetComponent<AgentManager>().fittestAgent = null;
+            GameObject.Find("Agent Manager").GetComponent<AgentManager>().highFitnessScore = 0;
+            Destroy(gameObject);
+        }
+        if (other.gameObject.tag == "Floor") {isGrounded = true;}
     }
 }

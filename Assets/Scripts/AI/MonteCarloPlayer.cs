@@ -48,11 +48,15 @@ public class MonteCarloPlayer : MonoBehaviour
             
             if(FitnessScore() > agentManager.highFitnessScore)
             {
-                agentManager.highFitnessScore = FitnessScore();
-                agentManager.fittestAgent = this.gameObject;
                 agentManager.WriteToSave(genes.ToArray(), agentManager.curGenesPath);
                 agentManager.parentPos = this.transform.position;
             }
+        }
+
+        if (lineIndex == agentManager.framesPerGeneration && FitnessScore() > agentManager.highFitnessScore)
+        {
+            agentManager.highFitnessScore = FitnessScore();
+            agentManager.fittestAgent = this.gameObject;
         }
         
         if (lineIndex < genes.Count)

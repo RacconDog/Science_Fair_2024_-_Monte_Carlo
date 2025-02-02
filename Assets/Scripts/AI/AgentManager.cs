@@ -28,7 +28,11 @@ public class AgentManager : MonoBehaviour
     [SerializeField] private LayerMask collisionLayer; // Assign this to your block layer
     [SerializeField] private float collisionCheckDistance = 0.1f;
 
+    public Vector3 target;
+
     int curGen = 0;
+
+    float curTime = 1.5f;
 
     void Awake()
     {
@@ -47,6 +51,19 @@ public class AgentManager : MonoBehaviour
 
     void Update()
     {
+        if (deadChildren.Count != 0)
+        {
+            // print(curTime);
+            curTime -= Time.deltaTime;
+            
+            if (curTime <= 0)
+            {
+                target = fittestAgent.transform.position;
+                BirthNewChildren();
+                curTime = 1.5f;
+            }
+        }
+
         HandleCollisions();
     }
 
@@ -86,17 +103,17 @@ public class AgentManager : MonoBehaviour
 
     public void BirthNewChildren()
     {
+        for (int i = 0; i < childrenPerGeneration; i++)
+        {
+            Instantiate(agentPrefab, new Vector3(fittestAgent.transform.position.x, fittestAgent.transform.position.y, 0), Quaternion.identity);
+        }
+
         for (int i = 0; i < deadChildren.Count; i++)
         {
             Destroy(deadChildren[i]);
         }
 
         deadChildren.Clear();
-
-        for (int i = 0; i < childrenPerGeneration; i++)
-        {
-            Instantiate(agentPrefab, new Vector3(parentPos.x, 0, 0), Quaternion.identity);
-        }
     }
 
     public void ClearGen()

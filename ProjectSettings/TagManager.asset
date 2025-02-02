@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Floor
   - Agent
+  - deathBlock
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - UI
   - Agent
   - Floor
-  - 
+  - deathBlock
   - 
   - 
   - 
