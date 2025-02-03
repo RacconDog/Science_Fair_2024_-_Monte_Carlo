@@ -20,6 +20,8 @@ public class LowLevelMovement : MonoBehaviour
 
     SpriteRenderer sprite;
 
+    public bool win = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -49,7 +51,7 @@ public class LowLevelMovement : MonoBehaviour
 
         bool flip = true;
 
-        if(dir == 1) {flip = false;} else {flip = true;}
+        if(dir == 1) {flip = false;} else if(dir == -1) {flip = true;}
         sprite.flipX = flip;
 
     }
@@ -82,8 +84,11 @@ public class LowLevelMovement : MonoBehaviour
         {
             // GameObject.Find("Agent Manager").GetComponent<AgentManager>().fittestAgent = null;
             GameObject.Find("Agent Manager").GetComponent<AgentManager>().highFitnessScore = 0;
+            GameObject.Find("Agent Manager").GetComponent<AgentManager>().childrenFallCount += 1;
             Destroy(gameObject);
         }
         if (other.gameObject.tag == "Floor") {isGrounded = true;}
+
+        if (other.gameObject.tag == "Win") {win = true;}
     }
 }

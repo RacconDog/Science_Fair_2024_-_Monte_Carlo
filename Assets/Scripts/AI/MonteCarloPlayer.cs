@@ -4,6 +4,8 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
 
 public class MonteCarloPlayer : MonoBehaviour
 {
@@ -100,7 +102,17 @@ public class MonteCarloPlayer : MonoBehaviour
         lowLevelMovement.AlterMoveDir(move);
         lowLevelMovement.Jump(jump);
 
+        if (lowLevelMovement.win == true && !agentManager.hasRecordedDataThisRun)
+        {
+            agentManager.hasRecordedDataThisRun = true;
+            agentManager.dataLogger.AddDataRow(
+                agentManager.curGen,
+                agentManager.childrenPerGeneration,
+                agentManager.framesPerGeneration);
 
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentSceneName);
+        }
     }
 
     public float FitnessScore()

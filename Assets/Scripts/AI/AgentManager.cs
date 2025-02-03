@@ -5,13 +5,14 @@ using System.Linq;
 using System;
 using Random = UnityEngine.Random;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class AgentManager : MonoBehaviour
 {
     [HideInInspector] public string savePath;
     [SerializeField] GameObject agentPrefab;
     
-    [SerializeField] float childrenPerGeneration;
+    [SerializeField] public float childrenPerGeneration;
     [SerializeField] public int framesPerGeneration;
     [SerializeField] float jumpChance;
 
@@ -28,14 +29,23 @@ public class AgentManager : MonoBehaviour
     [SerializeField] private LayerMask collisionLayer; // Assign this to your block layer
     [SerializeField] private float collisionCheckDistance = 0.1f;
 
+    public DataLogger dataLogger;
+
     public Vector3 target;
 
-    int curGen = 0;
+    [HideInInspector] public int curGen = 1;
 
-    float curTime = 1.5f;
+    float curTime = 10f;
+
+     public int childrenFallCount = 0;
+
+    [HideInInspector] public bool hasRecordedDataThisRun = false;
 
     void Awake()
     {
+        childrenPerGeneration = Random.Range(10, 150);
+        framesPerGeneration = Random.Range(10, 1000);
+
         savePath = Path.Combine(Application.dataPath, curGenesPath);
         curGenesPath = "Assets/" + curGenesPath; 
         if (File.Exists(savePath))
@@ -51,6 +61,11 @@ public class AgentManager : MonoBehaviour
 
     void Update()
     {
+        if (childrenFallCount == childrenPerGeneration)
+        {
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentSceneName);
+        }
         if (deadChildren.Count != 0)
         {
             // print(curTime);
@@ -103,6 +118,9 @@ public class AgentManager : MonoBehaviour
 
     public void BirthNewChildren()
     {
+        childrenFallCount = 0;
+        curGen += 1;
+
         for (int i = 0; i < childrenPerGeneration; i++)
         {
             Instantiate(agentPrefab, new Vector3(fittestAgent.transform.position.x, fittestAgent.transform.position.y, 0), Quaternion.identity);
