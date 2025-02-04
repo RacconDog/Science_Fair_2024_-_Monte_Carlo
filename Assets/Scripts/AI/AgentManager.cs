@@ -25,6 +25,8 @@ public class AgentManager : MonoBehaviour
     [SerializeField] public Vector2 parentPos;
     public List<GameObject> deadChildren = new List<GameObject>();
 
+    public List<string> fittestGenes = new List<string>();
+
     [Header("Collision Settings")]
     [SerializeField] private LayerMask collisionLayer; // Assign this to your block layer
     [SerializeField] private float collisionCheckDistance = 0.1f;
@@ -61,7 +63,7 @@ public class AgentManager : MonoBehaviour
 
     void Update()
     {
-        if (childrenFallCount == childrenPerGeneration)
+        if (childrenFallCount * 2 == childrenPerGeneration)
         {
             string currentSceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currentSceneName);

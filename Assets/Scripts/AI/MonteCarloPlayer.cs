@@ -50,7 +50,7 @@ public class MonteCarloPlayer : MonoBehaviour
             
             if(FitnessScore() > agentManager.highFitnessScore)
             {
-                agentManager.WriteToSave(genes.ToArray(), agentManager.curGenesPath);
+                agentManager.fittestGenes.AddRange(genes);
                 agentManager.parentPos = this.transform.position;
             }
         }
@@ -104,6 +104,8 @@ public class MonteCarloPlayer : MonoBehaviour
 
         if (lowLevelMovement.win == true && !agentManager.hasRecordedDataThisRun)
         {
+            agentManager.WriteToSave(genes.ToArray(), agentManager.savePath);
+
             agentManager.hasRecordedDataThisRun = true;
             agentManager.dataLogger.AddDataRow(
                 agentManager.curGen,
