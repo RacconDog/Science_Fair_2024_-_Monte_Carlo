@@ -104,7 +104,7 @@ public class MonteCarloPlayer : MonoBehaviour
 
         if (lowLevelMovement.win == true && !agentManager.hasRecordedDataThisRun)
         {
-            agentManager.WriteToSave(genes.ToArray(), agentManager.savePath);
+            agentManager.WriteToSave(agentManager.fittestGenes.ToArray(), agentManager.savePath);
 
             agentManager.hasRecordedDataThisRun = true;
             agentManager.dataLogger.AddDataRow(
