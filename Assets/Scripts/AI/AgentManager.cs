@@ -25,6 +25,8 @@ public class AgentManager : MonoBehaviour
     [SerializeField] public Vector2 parentPos;
     public List<GameObject> deadChildren = new List<GameObject>();
 
+    private List<GameObject> agentPool = new List<GameObject>();
+
     public List<string> fittestGenes = new List<string>();
 
     [Header("Collision Settings")]
@@ -35,7 +37,7 @@ public class AgentManager : MonoBehaviour
 
     public Vector3 target;
 
-    [HideInInspector] public int curGen = 1;
+    public int curGen = 1;
 
     float curTime = 10f;
 
@@ -43,10 +45,13 @@ public class AgentManager : MonoBehaviour
 
     [HideInInspector] public bool hasRecordedDataThisRun = false;
 
+    public Transform spawnPoint;
+
     void Awake()
     {
-        childrenPerGeneration = Random.Range(10, 150);
-        framesPerGeneration = Random.Range(10, 1000);
+        // Screen.sleepTimeout  = SleepTimeout.NeverSleep;
+        // childrenPerGeneration = Random.Range(10, 150);
+        framesPerGeneration = Random.Range(50, 1000);
 
         savePath = Path.Combine(Application.dataPath, curGenesPath);
         curGenesPath = "Assets/" + curGenesPath; 
@@ -59,23 +64,42 @@ public class AgentManager : MonoBehaviour
         {
             Debug.LogError("File not found" + savePath);
         }
+
+        // Init object pool of agents
+        for (int i = 0; i < childrenPerGeneration; i++)
+        {
+            GameObject newAgent = Instantiate(agentPrefab, spawnPoint.position, Quaternion.identity);
+            newAgent.name += i;
+            agentPool.Add(newAgent);
+        }
     }
 
     void Update()
     {
-        if (childrenFallCount * 2 == childrenPerGeneration)
+        // if (GameObject.FindWithTag("Ag"))
+        // if (curGen > 75)
+        // {
+        //     string currentSceneName = SceneManager.GetActiveScene().name;
+        //     SceneManager.LoadScene(currentSceneName);
+        // }
+
+        if (childrenFallCount == childrenPerGeneration)
         {
             string currentSceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currentSceneName);
         }
         if (deadChildren.Count != 0)
         {
+            if (fittestAgent) {
+                target = fittestAgent.transform.position;
+            }
+
+            childrenFallCount = 0;
             // print(curTime);
             curTime -= Time.deltaTime;
             
             if (curTime <= 0)
             {
-                target = fittestAgent.transform.position;
                 BirthNewChildren();
                 curTime = 1.5f;
             }
@@ -120,17 +144,19 @@ public class AgentManager : MonoBehaviour
 
     public void BirthNewChildren()
     {
+        print("BirthNewChildren");
         childrenFallCount = 0;
         curGen += 1;
 
-        for (int i = 0; i < childrenPerGeneration; i++)
-        {
-            Instantiate(agentPrefab, new Vector3(fittestAgent.transform.position.x, fittestAgent.transform.position.y, 0), Quaternion.identity);
-        }
+        highFitnessScore = 0;
 
-        for (int i = 0; i < deadChildren.Count; i++)
+        // Rebirth just means move all agents to the location of the fittest agent
+        foreach (GameObject agent in agentPool)
         {
-            Destroy(deadChildren[i]);
+            print(agent.name);
+
+            agent.GetComponent<MonteCarloPlayer>().Init(fittestAgent.transform.position);
+            agent.GetComponent<LowLevelMovement>().Init();
         }
 
         deadChildren.Clear();

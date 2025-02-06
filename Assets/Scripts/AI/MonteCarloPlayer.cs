@@ -6,6 +6,8 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.SearchService;
 using UnityEngine.SceneManagement;
+using System;
+using NUnit.Framework;
 
 public class MonteCarloPlayer : MonoBehaviour
 {
@@ -18,6 +20,7 @@ public class MonteCarloPlayer : MonoBehaviour
     [SerializeField] int jump;
     [SerializeField] int move;
     [SerializeField] bool isDead = false;
+    [SerializeField] bool isFallDead = false;
 
     List<string> genes = new List<string>();
 
@@ -39,6 +42,21 @@ public class MonteCarloPlayer : MonoBehaviour
         genes.AddRange(additiveMutation);
     }
     
+    public void Init(Vector3 birthPosition)
+    {
+        transform.position = birthPosition;
+        lineIndex = 0;
+        jump = 0;
+        move = 0;
+        isDead = false;
+        isFallDead = false;
+        GetComponent<SpriteRenderer>().enabled = true;
+
+        List<string> additiveMutation 
+            = new List<string>(agentManager.GenerateGenes(agentManager.framesPerGeneration));
+        genes.AddRange(additiveMutation);
+    }
+
     void FixedUpdate()
     {
         string curLine = " 0,0";
@@ -48,16 +66,17 @@ public class MonteCarloPlayer : MonoBehaviour
             isDead = true;
             agentManager.deadChildren.Add(this.gameObject);
             
-            if(FitnessScore() > agentManager.highFitnessScore)
-            {
-                agentManager.fittestGenes.AddRange(genes);
-                agentManager.parentPos = this.transform.position;
-            }
+            // if (FitnessScore() > agentManager.highFitnessScore)
+            // {
+            //     agentManager.fittestGenes.AddRange(genes);
+            //     agentManager.parentPos = this.transform.position;
+            // }
         }
 
-        if (lineIndex == agentManager.framesPerGeneration && FitnessScore() > agentManager.highFitnessScore)
+        if (lineIndex == agentManager.framesPerGeneration && GetFitnessScore() > agentManager.highFitnessScore)
         {
-            agentManager.highFitnessScore = FitnessScore();
+            Debug.Log("end of generation: fittestAgent is " + this.gameObject.name, this.gameObject);
+            agentManager.highFitnessScore = GetFitnessScore();
             agentManager.fittestAgent = this.gameObject;
         }
         
@@ -108,7 +127,7 @@ public class MonteCarloPlayer : MonoBehaviour
 
             agentManager.hasRecordedDataThisRun = true;
             agentManager.dataLogger.AddDataRow(
-                agentManager.curGen,
+                agentManager.curGen * agentManager.framesPerGeneration,
                 agentManager.childrenPerGeneration,
                 agentManager.framesPerGeneration);
 
@@ -117,8 +136,18 @@ public class MonteCarloPlayer : MonoBehaviour
         }
     }
 
-    public float FitnessScore()
+    public void FallToDeath()
     {
-        return transform.position.x;
+        isFallDead = true;
+        GetComponent<SpriteRenderer>().enabled = false;
+    }
+
+    public float GetFitnessScore()
+    {
+        if (isFallDead) {
+            return 0;
+        }
+        
+        return transform.position.x + transform.position.y;
     }
 }

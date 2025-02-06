@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -35,6 +36,12 @@ public class LowLevelMovement : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
     }
 
+    public void Init()
+    {
+        isGrounded = false;
+        dir = 0;
+    }
+
     void FixedUpdate()
     {
         // Jump(1);
@@ -51,7 +58,13 @@ public class LowLevelMovement : MonoBehaviour
 
         bool flip = true;
 
-        if(dir == 1) {flip = false;} else if(dir == -1) {flip = true;}
+        if (dir == 1) {
+            flip = false;
+        } else if (dir == -1) {
+            flip = true;
+        } else {
+            flip = false;
+        }
         sprite.flipX = flip;
 
     }
@@ -78,14 +91,17 @@ public class LowLevelMovement : MonoBehaviour
         isGrounded = false;
     }
 
-    void OnCollisionStay2D(Collision2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "deathBlock") 
         {
+            print("hit death block");
             // GameObject.Find("Agent Manager").GetComponent<AgentManager>().fittestAgent = null;
-            GameObject.Find("Agent Manager").GetComponent<AgentManager>().highFitnessScore = 0;
-            GameObject.Find("Agent Manager").GetComponent<AgentManager>().childrenFallCount += 1;
-            Destroy(gameObject);
+            AgentManager am = GameObject.Find("Agent Manager").GetComponent<AgentManager>();
+            am.highFitnessScore = 0;
+            am.childrenFallCount += 1;
+
+            GetComponent<MonteCarloPlayer>().FallToDeath();
         }
         if (other.gameObject.tag == "Floor") {isGrounded = true;}
 
