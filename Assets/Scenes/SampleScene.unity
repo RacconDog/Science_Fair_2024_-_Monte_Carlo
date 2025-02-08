@@ -5651,13 +5651,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 972026690}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.008726558, z: 0, w: 0.999962}
-  m_LocalPosition: {x: 40.73, y: 1.17, z: -0.71}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 40.6, y: 0.39, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 1, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1002174186
 GameObject:
   m_ObjectHideFlags: 0
@@ -6375,8 +6375,8 @@ MonoBehaviour:
   savePath: /Users/cedar/Library/Application Support/DefaultCompany/Weston & Kai
     Science Fair 2024/Save.txt
   agentPrefab: {fileID: 8731655110817429047, guid: 386bbf5a4813a1f47ad29d1f62ff3368, type: 3}
-  childrenPerGeneration: 300
-  framesPerGeneration: 150
+  childrenPerGeneration: 200
+  framesPerGeneration: 250
   jumpChance: 5
   curGenesPath: Save.txt
   totalGenesPath: 
@@ -11372,6 +11372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e39159de60544622922228a60b952d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monteCarloPlayer: {fileID: 0}
   speed: 3.5
   jumpForce: 7.5
   debugControlMode: 0

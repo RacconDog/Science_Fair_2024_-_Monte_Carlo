@@ -20,7 +20,7 @@ public class AgentManager : MonoBehaviour
     [SerializeField] public string totalGenesPath;
 
     [Header("Debug: ---> Don't edit!!! <----")]
-    [SerializeField] public GameObject fittestAgent;
+    [SerializeField] public MonteCarloPlayer fittestAgent;
     [SerializeField] public float highFitnessScore;
     [SerializeField] public Vector2 parentPos;
     public List<GameObject> deadChildren = new List<GameObject>();
@@ -51,7 +51,7 @@ public class AgentManager : MonoBehaviour
     {
         // Screen.sleepTimeout  = SleepTimeout.NeverSleep;
         // childrenPerGeneration = Random.Range(10, 150);
-        framesPerGeneration = Random.Range(50, 1000);
+        // framesPerGeneration = Random.Range(50, 1000);
 
         savePath = Path.Combine(Application.dataPath, curGenesPath);
         curGenesPath = "Assets/" + curGenesPath; 
@@ -90,8 +90,8 @@ public class AgentManager : MonoBehaviour
         }
         if (deadChildren.Count != 0)
         {
-            if (fittestAgent) {
-                target = fittestAgent.transform.position;
+            if (fittestAgent.lastSafePos != Vector3.zero) {
+                target = fittestAgent.lastSafePos;
             }
 
             childrenFallCount = 0;
@@ -155,7 +155,7 @@ public class AgentManager : MonoBehaviour
         {
             print(agent.name);
 
-            agent.GetComponent<MonteCarloPlayer>().Init(fittestAgent.transform.position);
+            agent.GetComponent<MonteCarloPlayer>().Init(fittestAgent.lastSafePos);
             agent.GetComponent<LowLevelMovement>().Init();
         }
 

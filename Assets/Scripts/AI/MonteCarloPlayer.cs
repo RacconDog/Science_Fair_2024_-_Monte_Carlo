@@ -8,6 +8,7 @@ using UnityEditor.SearchService;
 using UnityEngine.SceneManagement;
 using System;
 using NUnit.Framework;
+using Unity.VisualScripting;
 
 public class MonteCarloPlayer : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class MonteCarloPlayer : MonoBehaviour
     [SerializeField] int move;
     [SerializeField] bool isDead = false;
     [SerializeField] bool isFallDead = false;
+    
+    public Vector3 lastSafePos;
 
     List<string> genes = new List<string>();
 
@@ -73,11 +76,17 @@ public class MonteCarloPlayer : MonoBehaviour
             // }
         }
 
+        // End of generation
         if (lineIndex == agentManager.framesPerGeneration && GetFitnessScore() > agentManager.highFitnessScore)
         {
-            Debug.Log("end of generation: fittestAgent is " + this.gameObject.name, this.gameObject);
-            agentManager.highFitnessScore = GetFitnessScore();
-            agentManager.fittestAgent = this.gameObject;
+            bool gonnaDie = false;
+
+            if (! gonnaDie) {
+                // Make me the fittest agent
+                Debug.Log("end of generation: fittestAgent is " + this.gameObject.name, this.gameObject);
+                agentManager.highFitnessScore = GetFitnessScore();
+                agentManager.fittestAgent = this;
+            }
         }
         
         if (lineIndex < genes.Count)
@@ -148,6 +157,6 @@ public class MonteCarloPlayer : MonoBehaviour
             return 0;
         }
         
-        return transform.position.x + transform.position.y;
+        return transform.position.x + .8f * transform.position.y;
     }
 }

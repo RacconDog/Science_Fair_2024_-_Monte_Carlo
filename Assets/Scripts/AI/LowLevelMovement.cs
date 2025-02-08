@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class LowLevelMovement : MonoBehaviour
 {
+    [SerializeField] MonteCarloPlayer monteCarloPlayer;
     [SerializeField] float speed;
     [SerializeField] float jumpForce;
     PlayerInput playerInput;
@@ -91,11 +92,27 @@ public class LowLevelMovement : MonoBehaviour
         isGrounded = false;
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Floor") 
+        {
+            bool isTouchingTop = other.contacts[0].normal == Vector2.up;
+
+            if (isTouchingTop)
+            {
+                isGrounded = true;
+                monteCarloPlayer.lastSafePos = transform.position;
+            }
+        }
+
+        if (other.gameObject.tag == "Win") {win = true;}
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) 
     {
         if (other.gameObject.tag == "deathBlock") 
         {
-            print("hit death block");
+            // print("hit death block");
             // GameObject.Find("Agent Manager").GetComponent<AgentManager>().fittestAgent = null;
             AgentManager am = GameObject.Find("Agent Manager").GetComponent<AgentManager>();
             am.highFitnessScore = 0;
@@ -103,8 +120,5 @@ public class LowLevelMovement : MonoBehaviour
 
             GetComponent<MonteCarloPlayer>().FallToDeath();
         }
-        if (other.gameObject.tag == "Floor") {isGrounded = true;}
-
-        if (other.gameObject.tag == "Win") {win = true;}
     }
 }

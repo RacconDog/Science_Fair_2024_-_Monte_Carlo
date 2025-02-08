@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e39159de60544622922228a60b952d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monteCarloPlayer: {fileID: 2050358000118306254}
   speed: 4
   jumpForce: 7.5
   debugControlMode: 0
@@ -198,3 +199,5 @@ MonoBehaviour:
   jump: 0
   move: 0
   isDead: 0
+  isFallDead: 0
+  lastSafePos: {x: 0, y: 0, z: 0}
