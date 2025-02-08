@@ -41,7 +41,7 @@ public class AgentManager : MonoBehaviour
 
     float curTime = 10f;
 
-     public int childrenFallCount = 0;
+    public int childrenFallCount = 0;
 
     [HideInInspector] public bool hasRecordedDataThisRun = false;
 
@@ -77,11 +77,11 @@ public class AgentManager : MonoBehaviour
     void Update()
     {
         // if (GameObject.FindWithTag("Ag"))
-        // if (curGen > 75)
-        // {
-        //     string currentSceneName = SceneManager.GetActiveScene().name;
-        //     SceneManager.LoadScene(currentSceneName);
-        // }
+        if (curGen > 100)
+        {
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentSceneName);
+        }
 
         if (childrenFallCount == childrenPerGeneration)
         {
